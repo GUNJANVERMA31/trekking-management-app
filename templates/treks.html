@@ -1,18 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Trekking Packages</title>
-    <tr>
-    <th>Name</th>
-    <th>Location</th>
-    <th>Duration</th>
-    <th>Difficulty</th>
-    <th>Price</th>
-    <th>Action</th>
-</tr>
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block content %}
 
 <h1>Available Trekking Packages</h1>
 
@@ -45,8 +33,4 @@
 </tr>
 
 {% endfor %}
-
-</table>
-
-</body>
-</html>
+{% endblock %}

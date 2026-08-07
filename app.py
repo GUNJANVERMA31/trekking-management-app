@@ -1,10 +1,26 @@
-from flask import Flask, render_template, request 
+from flask import Flask, render_template, request, session, redirect 
 import sqlite3
 
 app = Flask(__name__)
+app.secret_key = "trekking_secret_key"
+
+def login_required():
+    if "user_id" not in session:
+        return False
+    return True
 
 conn = sqlite3.connect("trekking.db")
 cursor = conn.cursor()
+
+cursor.execute("DROP TABLE IF EXISTS bookings")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS bookings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    trek_id INTEGER
+)
+""")
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
@@ -22,6 +38,14 @@ CREATE TABLE IF NOT EXISTS treks (
     duration TEXT,
     difficulty TEXT,
     price INTEGER
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS bookings (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER,
+    trek_id INTEGER
 )
 """)
 
@@ -85,7 +109,11 @@ def login():
         conn.close()
 
         if user:
+            session["user_id"] = user[0]
+            session["user_name"] = user[1]
+
             return render_template("dashboard.html", name=user[1])
+        
         else:
             return "Invalid Email or Password"
 
@@ -94,6 +122,8 @@ def login():
 @app.route("/treks")
 def treks():
 
+    if not login_required():
+        return redirect("/login")
     conn = sqlite3.connect("trekking.db")
     cursor = conn.cursor()
 
@@ -104,6 +134,42 @@ def treks():
     conn.close()
 
     return render_template("treks.html", treks=trek_data)
+
+@app.route("/my_bookings")
+def my_bookings():
+
+    if not login_required():
+        return redirect("/login")
+
+    conn = sqlite3.connect("trekking.db")
+    cursor = conn.cursor()
+
+    user_id = session.get("user_id")
+
+    cursor.execute("""
+    SELECT treks.trek_name,
+       treks.location,
+       treks.duration,
+       treks.difficulty,
+       treks.price
+    FROM bookings
+    JOIN treks
+    ON bookings.trek_id = treks.id
+    WHERE bookings.user_id = ?
+    """, (user_id,))
+
+    booking_data = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("my_bookings.html", bookings=booking_data)
+
+@app.route("/logout")
+def logout():
+
+    session.clear()
+
+    return redirect("/login")
 
 @app.route("/add_trek", methods=["GET", "POST"])
 def add_trek():
@@ -136,6 +202,8 @@ def add_trek():
 @app.route("/book/<int:trek_id>")
 def book(trek_id):
 
+    user_id = session.get("user_id")
+
     conn = sqlite3.connect("trekking.db")
     cursor = conn.cursor()
 
@@ -147,9 +215,9 @@ def book(trek_id):
     """)
 
     cursor.execute(
-        "INSERT INTO bookings (trek_id) VALUES (?)",
-        (trek_id,)
-    )
+    "INSERT INTO bookings (user_id, trek_id) VALUES (?, ?)",
+    (user_id, trek_id)
+)
 
     conn.commit()
     conn.close()
