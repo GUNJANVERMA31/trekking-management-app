@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trekking Packages</title>
+    <tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Duration</th>
+    <th>Difficulty</th>
+    <th>Price</th>
+    <th>Action</th>
+</tr>
+</head>
+
+<body>
+
+<h1>Available Trekking Packages</h1>
+
+<table border="1">
+
+<tr>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Duration</th>
+    <th>Difficulty</th>
+    <th>Price</th>
+</tr>
+
+{% for trek in treks %}
+
+<tr>
+    <td>{{trek[1]}}</td>
+    <td>{{trek[2]}}</td>
+    <td>{{trek[3]}}</td>
+    <td>{{trek[4]}}</td>
+    <td>{{trek[5]}}</td>
+
+    
+
+<td>
+    <a href="/book/{{trek[0]}}">
+        <button>Book Now</button>
+    </a>
+</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+venv/
+trekking.db
+__pycache__/
+*.pyc
