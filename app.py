@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, session, redirect 
+from flask import Flask, render_template, request, session, redirect, flash
+
 import sqlite3
 
 app = Flask(__name__)
@@ -219,6 +220,7 @@ def admin_add_trek():
         conn.commit()
         conn.close()
 
+        flash("Trek added successfully!")
         return redirect("/admin/treks")
 
     return render_template("admin_add_trek.html")
@@ -249,6 +251,7 @@ def admin_edit_trek(trek_id):
         conn.commit()
         conn.close()
 
+        flash("Trek updated successfully!")
         return redirect("/admin/treks")
 
     cursor.execute("SELECT * FROM treks WHERE id=?", (trek_id,))
@@ -270,8 +273,9 @@ def admin_delete_trek(trek_id):
     cursor.execute("DELETE FROM treks WHERE id=?", (trek_id,))
 
     conn.commit()
-    conn.close()
-
+    conn.close() 
+    
+    flash("Trek deleted successfully!")
     return redirect("/admin/treks")
 
 @app.route("/treks")

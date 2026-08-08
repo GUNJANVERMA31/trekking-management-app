@@ -37,7 +37,8 @@
                 <button>Edit</button>
             </a>
 
-            <a href="/admin/delete_trek/{{ trek[0] }}">
+            <a href="/admin/delete_trek/{{ trek[0] }}"
+                onclick="return confirm('Are you sure you want to delete this trek?');">
                 <button>Delete</button>
             </a>
         </td>
