@@ -99,7 +99,7 @@ def register():
         conn.commit()
         conn.close()
 
-        print("Data Saved Successfully!")
+        return redirect("/login")
 
 
     return render_template("register.html")
@@ -323,12 +323,13 @@ def my_bookings():
 
     return render_template("my_bookings.html", bookings=booking_data)
 
-@app.route("/logout")
-def logout():
+@app.route("/admin/logout")
+def admin_logout():
 
-    session.clear()
+    session.pop("admin_id", None)
+    session.pop("admin_username", None)
 
-    return redirect("/login")
+    return redirect("/admin/login")
 
 @app.route("/add_trek", methods=["GET", "POST"])
 def add_trek():

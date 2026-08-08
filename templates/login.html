@@ -1,24 +1,79 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title> Login </title>
+{% extends "base.html" %}
 
-    </head>
-    <body>
-        <h1> Login Page </h1>
-        
-    <form action="/login" method="POST">
-        <label> Email: </label><br>
-        <input type = "email" name="email">
+{% block content %}
 
-        <br><br>
-        <label>Password:</label><br>
-        <input type="password" name ="password">
+<div class="row justify-content-center">
 
+    <div class="col-md-6 col-lg-5">
 
-        <br><br>
-        <button> Login </button>
-        
-    </form>
-    </body>
-</html>
+        <div class="card shadow-sm border-0 mt-5">
+
+            <div class="card-body p-4">
+
+                <h2 class="text-center fw-bold mb-4">
+                    🔐 Login
+                </h2>
+
+                <p class="text-center text-muted mb-4">
+                    Login to your trekking account.
+                </p>
+
+                <form action="/login" method="POST">
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="password" class="form-label">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            🔐 Login
+                        </button>
+                    </div>
+
+                </form>
+
+                <div class="text-center mt-3">
+                    <span class="text-muted">
+                        Don't have an account?
+                    </span>
+
+                    <a href="/register" class="text-decoration-none">
+                        Register here
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

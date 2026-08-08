@@ -1,17 +1,60 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Trekking Management</title>
-    </head>
-    <body>
-        <h1>Welcome to Trekking Management App</h1>
-        <p>We organize trekking events.</p>
+{% extends "base.html" %}
 
-        <hr>
-        <b>Safety First</b>
-        <br>
-        <i>Enjoy Nature</i>
-        <br>
-        <u>Happy Trekking</u>
-    </body>
-</html>
+{% block content %}
+
+<div class="text-center py-5">
+
+    <h1 class="display-4 fw-bold">
+        Welcome to Trekking Management App 🏔️
+    </h1>
+
+    <p class="lead text-muted mt-3">
+        Explore beautiful trekking destinations and manage your trekking bookings easily.
+    </p>
+
+    <div class="mt-4">
+        <a href="/treks" class="btn btn-primary btn-lg">
+            Explore Treks
+        </a>
+    </div>
+
+</div>
+
+<div class="row g-4 mt-3">
+
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <h3 class="card-title">🛡️ Safety First</h3>
+                <p class="card-text">
+                    Safety is our first priority during every trekking experience.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <h3 class="card-title">🌲 Enjoy Nature</h3>
+                <p class="card-text">
+                    Discover beautiful trekking destinations and enjoy nature.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <h3 class="card-title">🥾 Happy Trekking</h3>
+                <p class="card-text">
+                    Plan your trek, book your package and enjoy your journey.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

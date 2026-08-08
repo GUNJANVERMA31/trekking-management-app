@@ -2,50 +2,95 @@
 
 {% block content %}
 
-<h1>Manage Treks</h1>
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="fw-bold">📋 Manage Treks</h1>
+        <p class="text-muted mb-0">
+            Add, edit and manage trekking packages.
+        </p>
+    </div>
 
-<a href="/admin/add_trek">
-    <button>Add New Trek</button>
-</a>
+    <a href="/admin/add_trek" class="btn btn-success">
+        ➕ Add New Trek
+    </a>
+</div>
 
-<br><br>
 
-<table border="1">
+<div class="card shadow-sm border-0">
 
-    <tr>
-        <th>ID</th>
-        <th>Trek Name</th>
-        <th>Location</th>
-        <th>Duration</th>
-        <th>Difficulty</th>
-        <th>Price</th>
-        <th>Action</th>
-    </tr>
+    <div class="card-body">
 
-    {% for trek in treks %}
+        <div class="table-responsive">
 
-    <tr>
-        <td>{{ trek[0] }}</td>
-        <td>{{ trek[1] }}</td>
-        <td>{{ trek[2] }}</td>
-        <td>{{ trek[3] }}</td>
-        <td>{{ trek[4] }}</td>
-        <td>{{ trek[5] }}</td>
+            <table class="table table-hover align-middle">
 
-        <td>
-            <a href="/admin/edit_trek/{{ trek[0] }}">
-                <button>Edit</button>
-            </a>
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Trek Name</th>
+                        <th>Location</th>
+                        <th>Duration</th>
+                        <th>Difficulty</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
 
-            <a href="/admin/delete_trek/{{ trek[0] }}"
-                onclick="return confirm('Are you sure you want to delete this trek?');">
-                <button>Delete</button>
-            </a>
-        </td>
-    </tr>
+                <tbody>
 
-    {% endfor %}
+                    {% for trek in treks %}
 
-</table>
+                    <tr>
+                        <td>{{ trek[0] }}</td>
+
+                        <td class="fw-semibold">
+                            {{ trek[1] }}
+                        </td>
+
+                        <td>
+                            📍 {{ trek[2] }}
+                        </td>
+
+                        <td>
+                            {{ trek[3] }}
+                        </td>
+
+                        <td>
+                            <span class="badge bg-warning text-dark">
+                                {{ trek[4] }}
+                            </span>
+                        </td>
+
+                        <td class="fw-bold">
+                            ₹{{ trek[5] }}
+                        </td>
+
+                        <td>
+
+                            <a href="/admin/edit_trek/{{ trek[0] }}"
+                               class="btn btn-sm btn-primary">
+                                ✏️ Edit
+                            </a>
+
+                            <a href="/admin/delete_trek/{{ trek[0] }}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure you want to delete this trek?');">
+                                🗑️ Delete
+                            </a>
+
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

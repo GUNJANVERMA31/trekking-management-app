@@ -1,30 +1,92 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Register</title>
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block content %}
 
-    <h1>Register Page</h1>
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6">
 
-    <form action="/register" method="POST">
+        <div class="card shadow-sm border-0 mt-4">
+            <div class="card-body p-4">
 
-        <label>Full Name:</label><br>
-        <input type="text" name="fullname"><br><br>
+                <h2 class="text-center mb-4">
+                    📝 Create Account
+                </h2>
 
-        <label>Email:</label><br>
-        <input type="email" name="email"><br><br>
+                <form method="POST">
 
-        <label>Password:</label><br>
-        <input type="password" name="password"><br><br>
+                    <div class="mb-3">
+                        <label for="fullname" class="form-label">
+                            Full Name
+                        </label>
 
-        <label>Confirm Password:</label><br>
-        <input type="password" name="confirm_password"><br><br>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="fullname"
+                            name="fullname"
+                            required
+                        >
+                    </div>
 
-        <button type="submit">Register</button>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">
+                            Email
+                        </label>
 
-    </form>
+                        <input
+                            type="email"
+                            class="form-control"
+                            id="email"
+                            name="email"
+                            required
+                        >
+                    </div>
 
-</body>
-</html>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            required
+                        >
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label">
+                            Confirm Password
+                        </label>
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="confirm_password"
+                            name="confirm_password"
+                            required
+                        >
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">
+                            Register
+                        </button>
+                    </div>
+
+                </form>
+
+                <p class="text-center mt-3 mb-0">
+                    Already have an account?
+                    <a href="/login">Login here</a>
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

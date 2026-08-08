@@ -1,31 +1,70 @@
-
-
 {% extends "base.html" %}
 
 {% block content %}
 
-<h1>My Bookings</h1>
+<div class="text-center mb-4">
+    <h1 class="fw-bold">📖 My Bookings</h1>
+    <p class="text-muted">
+        View your booked trekking packages.
+    </p>
+</div>
 
-<table border="1">
+<div class="card shadow-sm border-0">
 
-<tr>
-    <th>Trek Name</th>
-    <th>Location</th>
-    <th>Duration</th>
-    <th>Difficulty</th>
-    <th>Price</th>
-</tr>
+    <div class="card-body">
 
-{% for booking in bookings %}
+        <div class="table-responsive">
 
-<tr>
-    <td>{{booking[0]}}</td>
-    <td>{{booking[1]}}</td>
-    <td>{{booking[2]}}</td>
-    <td>{{booking[3]}}</td>
-    <td>{{booking[4]}}</td>
-</tr>
+            <table class="table table-hover align-middle">
 
-{% endfor %}
+                <thead class="table-dark">
+                    <tr>
+                        <th>Trek Name</th>
+                        <th>Location</th>
+                        <th>Duration</th>
+                        <th>Difficulty</th>
+                        <th>Price</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for booking in bookings %}
+
+                    <tr>
+                        <td class="fw-semibold">
+                            {{ booking[0] }}
+                        </td>
+
+                        <td>
+                            📍 {{ booking[1] }}
+                        </td>
+
+                        <td>
+                            {{ booking[2] }}
+                        </td>
+
+                        <td>
+                            <span class="badge bg-warning text-dark">
+                                {{ booking[3] }}
+                            </span>
+                        </td>
+
+                        <td class="fw-bold">
+                            ₹{{ booking[4] }}
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
 {% endblock %}
-

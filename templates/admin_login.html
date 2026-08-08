@@ -2,22 +2,76 @@
 
 {% block content %}
 
-<h1>Admin Login</h1>
+<div class="row justify-content-center">
 
-<form action="/admin/login" method="POST">
+    <div class="col-md-6 col-lg-5">
 
-    <label>Username:</label><br>
-    <input type="text" name="username" required>
+        <div class="card shadow-sm border-0 mt-5">
 
-    <br><br>
+            <div class="card-body p-4">
 
-    <label>Password:</label><br>
-    <input type="password" name="password" required>
+                <h2 class="text-center fw-bold mb-4">
+                    🔐 Admin Login
+                </h2>
 
-    <br><br>
+                <p class="text-center text-muted mb-4">
+                    Login to manage the trekking application.
+                </p>
 
-    <button type="submit">Admin Login</button>
+                <form method="POST">
 
-</form>
+                    <div class="mb-3">
+                        <label for="username" class="form-label">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="username"
+                            name="username"
+                            placeholder="Enter admin username"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="mb-4">
+                        <label for="password" class="form-label">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            placeholder="Enter admin password"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-dark">
+                            🔐 Admin Login
+                        </button>
+                    </div>
+
+                </form>
+
+                <div class="text-center mt-3">
+                    <a href="/" class="text-decoration-none">
+                        ← Back to Home
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}

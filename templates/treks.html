@@ -2,35 +2,58 @@
 
 {% block content %}
 
-<h1>Available Trekking Packages</h1>
+<div class="text-center mb-4">
+    <h1 class="fw-bold">🏔️ Available Trekking Packages</h1>
+    <p class="text-muted">
+        Choose a trekking package and start your adventure.
+    </p>
+</div>
 
-<table border="1">
+<div class="row g-4">
 
-<tr>
-    <th>Name</th>
-    <th>Location</th>
-    <th>Duration</th>
-    <th>Difficulty</th>
-    <th>Price</th>
-</tr>
+    {% for trek in treks %}
 
-{% for trek in treks %}
+    <div class="col-md-6 col-lg-4">
 
-<tr>
-    <td>{{trek[1]}}</td>
-    <td>{{trek[2]}}</td>
-    <td>{{trek[3]}}</td>
-    <td>{{trek[4]}}</td>
-    <td>{{trek[5]}}</td>
+        <div class="card h-100 shadow-sm border-0">
 
-    
+            <div class="card-body">
 
-<td>
-    <a href="/book/{{trek[0]}}">
-        <button>Book Now</button>
-    </a>
-</td>
-</tr>
+                <h4 class="card-title fw-bold">
+                    {{ trek[1] }}
+                </h4>
 
-{% endfor %}
+                <p class="text-muted mb-2">
+                    📍 {{ trek[2] }}
+                </p>
+
+                <p>
+                    <strong>Duration:</strong>
+                    {{ trek[3] }}
+                </p>
+
+                <p>
+                    <strong>Difficulty:</strong>
+                    {{ trek[4] }}
+                </p>
+
+                <h5 class="fw-bold">
+                    ₹{{ trek[5] }}
+                </h5>
+
+                <a href="/book/{{ trek[0] }}"
+                   class="btn btn-primary w-100 mt-3">
+                    Book Now
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
 {% endblock %}

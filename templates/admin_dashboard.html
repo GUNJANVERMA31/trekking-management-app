@@ -2,32 +2,114 @@
 
 {% block content %}
 
-<h1>Admin Dashboard</h1>
+<div class="text-center mb-5">
+    <h1 class="fw-bold">📊 Admin Dashboard</h1>
+    <p class="text-muted">
+        Welcome Admin 👋 Manage your trekking application from here.
+    </p>
+</div>
 
-<h2>Welcome Admin 👋</h2>
+<div class="row g-4 justify-content-center">
 
-<br>
+    <!-- Manage Treks -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 text-center">
+            <div class="card-body p-4">
 
-<a href="/admin/treks">
-    <button>Manage Treks</button>
-</a>
+                <div class="display-5 mb-3">🏔️</div>
 
-<br><br>
+                <h5 class="card-title fw-bold">
+                    Manage Treks
+                </h5>
 
-<a href="/admin/bookings">
-    <button>View All Bookings</button>
-</a>
+                <p class="card-text text-muted">
+                    Add, edit and delete trekking packages.
+                </p>
 
-<br><br>
+                <a href="/admin/treks"
+                   class="btn btn-primary">
+                    Manage Treks
+                </a>
 
-<a href="/admin/users">
-    <button>View Users</button>
-</a>
+            </div>
+        </div>
+    </div>
 
-<br><br>
 
-<a href="/admin/logout">
-    <button>Admin Logout</button>
-</a>
+    <!-- View Bookings -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 text-center">
+            <div class="card-body p-4">
+
+                <div class="display-5 mb-3">📖</div>
+
+                <h5 class="card-title fw-bold">
+                    All Bookings
+                </h5>
+
+                <p class="card-text text-muted">
+                    View all trek bookings made by users.
+                </p>
+
+                <a href="/admin/bookings"
+                   class="btn btn-success">
+                    View Bookings
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- View Users -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 text-center">
+            <div class="card-body p-4">
+
+                <div class="display-5 mb-3">👥</div>
+
+                <h5 class="card-title fw-bold">
+                    Users
+                </h5>
+
+                <p class="card-text text-muted">
+                    View registered users of the application.
+                </p>
+
+                <a href="/admin/users"
+                   class="btn btn-info text-white">
+                    View Users
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Admin Logout -->
+    <div class="col-md-6 col-lg-3">
+        <div class="card h-100 shadow-sm border-0 text-center">
+            <div class="card-body p-4">
+
+                <div class="display-5 mb-3">🚪</div>
+
+                <h5 class="card-title fw-bold">
+                    Admin Logout
+                </h5>
+
+                <p class="card-text text-muted">
+                    Securely logout from the admin panel.
+                </p>
+
+                <a href="/admin/logout"
+                   class="btn btn-danger">
+                    Logout
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}

@@ -1,22 +1,53 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block content %}
 
-<h1>Welcome {{name}}</h1>
+<div class="row justify-content-center">
 
-<h2>Trekking Management App</h2>
+    <div class="col-md-8 col-lg-6">
 
-<p>Login Successfully!</p>
+        <div class="card shadow-sm border-0 mt-5">
 
-<br><br>
+            <div class="card-body text-center p-5">
 
-<a href="/logout">
-    <button>Logout</button>
-</a>
+                <div class="display-4 mb-3">
+                    🏔️
+                </div>
 
-</body>
-</html>
+                <h1 class="fw-bold">
+                    Welcome {{ name }}
+                </h1>
+
+                <h3 class="text-muted mt-3">
+                    Trekking Management App
+                </h3>
+
+                <div class="alert alert-success mt-4" role="alert">
+                    ✅ Login Successfully!
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+
+                    <a href="/treks" class="btn btn-primary">
+                        🏔️ Explore Treks
+                    </a>
+
+                    <a href="/my_bookings" class="btn btn-outline-primary">
+                        📖 My Bookings
+                    </a>
+
+                    <a href="/logout" class="btn btn-outline-danger">
+                        🚪 Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

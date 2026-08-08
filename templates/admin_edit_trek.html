@@ -1,41 +1,136 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Trek</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-    <h1>Edit Trek</h1>
+{% block content %}
 
-    <form method="POST">
+<div class="row justify-content-center">
 
-        <label>Trek Name:</label>
-        <input type="text" name="trek_name" value="{{ trek[1] }}" required>
-        <br><br>
+    <div class="col-md-8 col-lg-6">
 
-        <label>Location:</label>
-        <input type="text" name="location" value="{{ trek[2] }}" required>
-        <br><br>
+        <div class="card shadow-sm border-0 mt-4">
 
-        <label>Duration:</label>
-        <input type="text" name="duration" value="{{ trek[3] }}" required>
-        <br><br>
+            <div class="card-body p-4">
 
-        <label>Difficulty:</label>
-        <input type="text" name="difficulty" value="{{ trek[4] }}" required>
-        <br><br>
+                <h2 class="text-center fw-bold mb-4">
+                    ✏️ Edit Trek
+                </h2>
 
-        <label>Price:</label>
-        <input type="number" name="price" value="{{ trek[5] }}" required>
-        <br><br>
+                <form method="POST">
 
-        <button type="submit">Update Trek</button>
+                    <div class="mb-3">
+                        <label for="trek_name" class="form-label">
+                            Trek Name
+                        </label>
 
-    </form>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="trek_name"
+                            name="trek_name"
+                            value="{{ trek[1] }}"
+                            required
+                        >
+                    </div>
 
-    <br>
 
-    <a href="/admin/treks">Back to Manage Treks</a>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">
+                            Location
+                        </label>
 
-</body>
-</html>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="location"
+                            name="location"
+                            value="{{ trek[2] }}"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="duration" class="form-label">
+                            Duration
+                        </label>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="duration"
+                            name="duration"
+                            value="{{ trek[3] }}"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="difficulty" class="form-label">
+                            Difficulty
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="difficulty"
+                            name="difficulty"
+                            required
+                        >
+                            <option value="Easy"
+                                {% if trek[4] == "Easy" %}selected{% endif %}>
+                                Easy
+                            </option>
+
+                            <option value="Moderate"
+                                {% if trek[4] == "Moderate" %}selected{% endif %}>
+                                Moderate
+                            </option>
+
+                            <option value="Hard"
+                                {% if trek[4] == "Hard" %}selected{% endif %}>
+                                Hard
+                            </option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-4">
+                        <label for="price" class="form-label">
+                            Price (₹)
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="price"
+                            name="price"
+                            value="{{ trek[5] }}"
+                            min="0"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            💾 Update Trek
+                        </button>
+                    </div>
+
+                </form>
+
+
+                <div class="text-center mt-3">
+                    <a href="/admin/treks" class="text-decoration-none">
+                        ← Back to Manage Treks
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

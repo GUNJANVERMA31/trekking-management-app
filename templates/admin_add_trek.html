@@ -2,37 +2,126 @@
 
 {% block content %}
 
-<h1>Add New Trek</h1>
+<div class="row justify-content-center">
 
-<form action="/admin/add_trek" method="POST">
+    <div class="col-md-8 col-lg-6">
 
-    <label>Trek Name:</label><br>
-    <input type="text" name="trek_name" required>
+        <div class="card shadow-sm border-0 mt-4">
 
-    <br><br>
+            <div class="card-body p-4">
 
-    <label>Location:</label><br>
-    <input type="text" name="location" required>
+                <h2 class="text-center fw-bold mb-4">
+                    ➕ Add New Trek
+                </h2>
 
-    <br><br>
+                <form method="POST">
 
-    <label>Duration:</label><br>
-    <input type="text" name="duration" required>
+                    <div class="mb-3">
+                        <label for="trek_name" class="form-label">
+                            Trek Name
+                        </label>
 
-    <br><br>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="trek_name"
+                            name="trek_name"
+                            placeholder="Enter trek name"
+                            required
+                        >
+                    </div>
 
-    <label>Difficulty:</label><br>
-    <input type="text" name="difficulty" required>
 
-    <br><br>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">
+                            Location
+                        </label>
 
-    <label>Price:</label><br>
-    <input type="number" name="price" required>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="location"
+                            name="location"
+                            placeholder="Enter location"
+                            required
+                        >
+                    </div>
 
-    <br><br>
 
-    <button type="submit">Add Trek</button>
+                    <div class="mb-3">
+                        <label for="duration" class="form-label">
+                            Duration
+                        </label>
 
-</form>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="duration"
+                            name="duration"
+                            placeholder="Example: 5 Days"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="difficulty" class="form-label">
+                            Difficulty
+                        </label>
+
+                        <select
+                            class="form-select"
+                            id="difficulty"
+                            name="difficulty"
+                            required
+                        >
+                            <option value="" selected disabled>
+                                Select difficulty
+                            </option>
+                            <option value="Easy">Easy</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-4">
+                        <label for="price" class="form-label">
+                            Price (₹)
+                        </label>
+
+                        <input
+                            type="number"
+                            class="form-control"
+                            id="price"
+                            name="price"
+                            placeholder="Enter price"
+                            min="0"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">
+                            ➕ Add Trek
+                        </button>
+                    </div>
+
+                </form>
+
+                <div class="text-center mt-3">
+                    <a href="/admin/treks" class="text-decoration-none">
+                        ← Back to Manage Treks
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}
