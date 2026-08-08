@@ -49,6 +49,21 @@ CREATE TABLE IF NOT EXISTS bookings (
 )
 """)
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS admins (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    password TEXT
+)
+""")
+
+cursor.execute("""
+INSERT OR IGNORE INTO admins (id, username, password)
+VALUES (1, 'admin', 'admin123')
+""")
+
+cursor.execute("SELECT * FROM admins")
+print("Admins:", cursor.fetchall())
 
 
 conn.commit()
@@ -118,6 +133,146 @@ def login():
             return "Invalid Email or Password"
 
     return render_template("login.html")
+
+@app.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+
+    if request.method == "POST":
+
+        username = request.form["username"]
+        password = request.form["password"]
+
+        print("Admin Username:", username)
+        print("Admin Password:", password)
+
+        conn = sqlite3.connect("trekking.db")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "SELECT * FROM admins WHERE username=? AND password=?",
+            (username, password)
+        )
+
+        admin = cursor.fetchone()
+        print("Admin Found:", admin)
+
+        conn.close()
+
+        if admin:
+            session["admin_id"] = admin[0]
+            session["admin_username"] = admin[1]
+
+            return redirect("/admin/dashboard")
+
+        else:
+            return "Invalid Admin Username or Password"
+
+    return render_template("admin_login.html")
+
+@app.route("/admin/dashboard")
+def admin_dashboard():
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    return render_template("admin_dashboard.html")
+
+@app.route("/admin/treks")
+def admin_treks():
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    conn = sqlite3.connect("trekking.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM treks")
+    trek_data = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("admin_treks.html", treks=trek_data)
+
+@app.route("/admin/add_trek", methods=["GET", "POST"])
+def admin_add_trek():
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    if request.method == "POST":
+
+        trek_name = request.form["trek_name"]
+        location = request.form["location"]
+        duration = request.form["duration"]
+        difficulty = request.form["difficulty"]
+        price = request.form["price"]
+
+        conn = sqlite3.connect("trekking.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            INSERT INTO treks
+            (trek_name, location, duration, difficulty, price)
+            VALUES (?, ?, ?, ?, ?)
+        """, (trek_name, location, duration, difficulty, price))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/admin/treks")
+
+    return render_template("admin_add_trek.html")
+
+@app.route("/admin/edit_trek/<int:trek_id>", methods=["GET", "POST"])
+def admin_edit_trek(trek_id):
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    conn = sqlite3.connect("trekking.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        trek_name = request.form["trek_name"]
+        location = request.form["location"]
+        duration = request.form["duration"]
+        difficulty = request.form["difficulty"]
+        price = request.form["price"]
+
+        cursor.execute("""
+            UPDATE treks
+            SET trek_name=?, location=?, duration=?, difficulty=?, price=?
+            WHERE id=?
+        """, (trek_name, location, duration, difficulty, price, trek_id))
+
+        conn.commit()
+        conn.close()
+
+        return redirect("/admin/treks")
+
+    cursor.execute("SELECT * FROM treks WHERE id=?", (trek_id,))
+    trek = cursor.fetchone()
+
+    conn.close()
+
+    return render_template("admin_edit_trek.html", trek=trek)
+
+@app.route("/admin/delete_trek/<int:trek_id>")
+def admin_delete_trek(trek_id):
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    conn = sqlite3.connect("trekking.db")
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM treks WHERE id=?", (trek_id,))
+
+    conn.commit()
+    conn.close()
+
+    return redirect("/admin/treks")
 
 @app.route("/treks")
 def treks():

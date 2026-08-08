@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Trek</title>
+</head>
+<body>
+
+    <h1>Edit Trek</h1>
+
+    <form method="POST">
+
+        <label>Trek Name:</label>
+        <input type="text" name="trek_name" value="{{ trek[1] }}" required>
+        <br><br>
+
+        <label>Location:</label>
+        <input type="text" name="location" value="{{ trek[2] }}" required>
+        <br><br>
+
+        <label>Duration:</label>
+        <input type="text" name="duration" value="{{ trek[3] }}" required>
+        <br><br>
+
+        <label>Difficulty:</label>
+        <input type="text" name="difficulty" value="{{ trek[4] }}" required>
+        <br><br>
+
+        <label>Price:</label>
+        <input type="number" name="price" value="{{ trek[5] }}" required>
+        <br><br>
+
+        <button type="submit">Update Trek</button>
+
+    </form>
+
+    <br>
+
+    <a href="/admin/treks">Back to Manage Treks</a>
+
+</body>
+</html>
