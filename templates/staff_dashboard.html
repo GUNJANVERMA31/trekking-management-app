@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+
+        <div class="card-body text-center">
+
+            <h1>👨‍💼 Welcome {{ name }}</h1>
+
+            <h3 class="mt-3">
+                Trek Staff Dashboard
+            </h3>
+
+            <p class="mt-3">
+                You are an approved trek staff member.
+            </p>
+
+            <div class="mt-4">
+
+                <a href="/staff/treks"
+                   class="btn btn-primary">
+                    🏔️ My Assigned Treks
+                </a>
+
+                <a href="/staff/logout"
+                   class="btn btn-danger">
+                    Logout
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

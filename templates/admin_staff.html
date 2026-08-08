@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h1>👨‍💼 Trek Staff</h1>
+
+    <p>View and manage registered trek staff.</p>
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Approval</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for member in staff %}
+
+            <tr>
+
+                <td>{{ member[0] }}</td>
+                <td>{{ member[1] }}</td>
+                <td>{{ member[2] }}</td>
+
+                <td>
+                    {% if member[3] == 1 %}
+                        <span class="badge bg-success">
+                            Approved
+                        </span>
+                    {% else %}
+                        <span class="badge bg-warning text-dark">
+                            Pending
+                        </span>
+                    {% endif %}
+                </td>
+
+                <td>
+                    {% if member[4] == 1 %}
+                        <span class="badge bg-danger">
+                            Blacklisted
+                        </span>
+                    {% else %}
+                        <span class="badge bg-success">
+                            Active
+                        </span>
+                    {% endif %}
+                </td>
+
+                <td>
+
+    {% if member[3] == 0 and member[4] == 0 %}
+
+        <a href="/admin/approve_staff/{{ member[0] }}"
+           class="btn btn-success btn-sm">
+            Approve
+        </a>
+
+    {% endif %}
+
+    {% if member[4] == 0 %}
+
+        <a href="/admin/blacklist_staff/{{ member[0] }}"
+           class="btn btn-danger btn-sm">
+            Blacklist
+        </a>
+
+    {% endif %}
+
+    {% if member[3] == 1 and member[4] == 0 %}
+
+        <a href="/admin/assign_trek/{{ member[0] }}"
+           class="btn btn-primary btn-sm">
+            Assign Trek
+        </a>
+
+    {% endif %}
+
+</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <a href="/admin/dashboard" class="btn btn-secondary">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+{% endblock %}

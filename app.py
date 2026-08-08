@@ -13,8 +13,6 @@ def login_required():
 conn = sqlite3.connect("trekking.db")
 cursor = conn.cursor()
 
-cursor.execute("DROP TABLE IF EXISTS bookings")
-
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS bookings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,6 +20,12 @@ CREATE TABLE IF NOT EXISTS bookings (
     trek_id INTEGER
 )
 """)
+try:
+    cursor.execute(
+        "ALTER TABLE bookings ADD COLUMN status TEXT DEFAULT 'Pending'"
+    )
+except sqlite3.OperationalError:
+    pass
 
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users (
@@ -31,6 +35,24 @@ CREATE TABLE IF NOT EXISTS users (
     password TEXT
 )
 """)
+try:
+    cursor.execute(
+        "ALTER TABLE users ADD COLUMN blacklisted INTEGER DEFAULT 0"
+    )
+except sqlite3.OperationalError:
+    pass
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS staff (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fullname TEXT,
+    email TEXT,
+    password TEXT,
+    approved INTEGER DEFAULT 0,
+    blacklisted INTEGER DEFAULT 0
+)
+""")
+
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS treks (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,11 +63,20 @@ CREATE TABLE IF NOT EXISTS treks (
     price INTEGER
 )
 """)
+try:
+    cursor.execute("ALTER TABLE treks ADD COLUMN available_slots INTEGER DEFAULT 0")
+except sqlite3.OperationalError:
+    pass
+
+try:
+    cursor.execute("ALTER TABLE treks ADD COLUMN status TEXT DEFAULT 'Open'")
+except sqlite3.OperationalError:
+    pass
 
 cursor.execute("""
-CREATE TABLE IF NOT EXISTS bookings (
+CREATE TABLE IF NOT EXISTS trek_staff (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER,
+    staff_id INTEGER,
     trek_id INTEGER
 )
 """)
@@ -103,6 +134,81 @@ def register():
 
 
     return render_template("register.html")
+
+@app.route("/staff/register", methods=["GET", "POST"])
+def staff_register():
+
+    if request.method == "POST":
+
+        fullname = request.form["fullname"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = sqlite3.connect("trekking.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            INSERT INTO staff
+            (fullname, email, password)
+            VALUES (?, ?, ?)
+        """, (fullname, email, password))
+
+        conn.commit()
+        conn.close()
+
+        flash("Staff registration successful! Wait for admin approval.")
+
+        return redirect("/staff/login")
+
+    return render_template("staff_register.html")
+
+@app.route("/staff/login", methods=["GET", "POST"])
+def staff_login():
+
+    if request.method == "POST":
+
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = sqlite3.connect("trekking.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT id, fullname, email, password, approved, blacklisted
+            FROM staff
+            WHERE email = ? AND password = ?
+        """, (email, password))
+
+        staff = cursor.fetchone()
+
+        conn.close()
+
+        if not staff:
+            return "Invalid Email or Password"
+
+        if staff[5] == 1:
+            return "Your staff account has been blacklisted."
+
+        if staff[4] == 0:
+            return "Your account is waiting for admin approval."
+
+        session["staff_id"] = staff[0]
+        session["staff_name"] = staff[1]
+
+        return redirect("/staff/dashboard")
+
+    return render_template("staff_login.html")
+
+@app.route("/staff/dashboard")
+def staff_dashboard():
+
+    if "staff_id" not in session:
+        return redirect("/staff/login")
+
+    return render_template(
+        "staff_dashboard.html",
+        name=session["staff_name"]
+    )
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -293,6 +399,153 @@ def treks():
     conn.close()
 
     return render_template("treks.html", treks=trek_data)
+
+@app.route("/admin/users")
+def admin_users():
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    conn = sqlite3.connect("trekking.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id, fullname, email, blacklisted
+        FROM users
+    """)
+
+    users = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("admin_users.html", users=users)
+
+@app.route("/admin/staff")
+def admin_staff():
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    conn = sqlite3.connect("trekking.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT id, fullname, email, approved, blacklisted
+        FROM staff
+    """)
+
+    staff = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("admin_staff.html", staff=staff)
+
+@app.route("/admin/assign_trek/<int:staff_id>", methods=["GET", "POST"])
+def assign_trek(staff_id):
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    conn = sqlite3.connect("trekking.db")
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+
+        trek_id = request.form["trek_id"]
+
+        cursor.execute("""
+            INSERT INTO trek_staff (staff_id, trek_id)
+            VALUES (?, ?)
+        """, (staff_id, trek_id))
+
+        conn.commit()
+        conn.close()
+
+        flash("Trek assigned to staff successfully!")
+
+        return redirect("/admin/staff")
+
+    cursor.execute("SELECT * FROM treks")
+    treks = cursor.fetchall()
+
+    cursor.execute(
+        "SELECT id, fullname, email FROM staff WHERE id = ?",
+        (staff_id,)
+    )
+
+    staff_member = cursor.fetchone()
+
+    conn.close()
+
+    return render_template(
+        "assign_trek.html",
+        treks=treks,
+        staff=staff_member
+    )
+
+@app.route("/admin/approve_staff/<int:staff_id>")
+def approve_staff(staff_id):
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    conn = sqlite3.connect("trekking.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE staff SET approved = 1 WHERE id = ?",
+        (staff_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    flash("Staff approved successfully!")
+
+    return redirect("/admin/staff")
+
+
+@app.route("/admin/blacklist_staff/<int:staff_id>")
+def blacklist_staff(staff_id):
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    conn = sqlite3.connect("trekking.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE staff SET blacklisted = 1 WHERE id = ?",
+        (staff_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    flash("Staff blacklisted successfully!")
+
+    return redirect("/admin/staff")
+
+@app.route("/admin/blacklist_user/<int:user_id>")
+def blacklist_user(user_id):
+
+    if "admin_id" not in session:
+        return redirect("/admin/login")
+
+    conn = sqlite3.connect("trekking.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE users SET blacklisted = 1 WHERE id = ?",
+        (user_id,)
+    )
+
+    conn.commit()
+    conn.close()
+
+    flash("User blacklisted successfully!")
+
+    return redirect("/admin/users")
 
 @app.route("/my_bookings")
 def my_bookings():

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>👥 Users</h1>
+
+<p>View and manage registered users.</p>
+
+<table class="table table-bordered table-striped">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        {% for user in users %}
+
+        <tr>
+
+            <td>{{ user[0] }}</td>
+            <td>{{ user[1] }}</td>
+            <td>{{ user[2] }}</td>
+
+            <td>
+                {% if user[3] == 1 %}
+                    <span class="badge bg-danger">
+                        Blacklisted
+                    </span>
+                {% else %}
+                    <span class="badge bg-success">
+                        Active
+                    </span>
+                {% endif %}
+            </td>
+
+            <td>
+
+                {% if user[3] == 0 %}
+
+                    <a href="/admin/blacklist_user/{{ user[0] }}"
+                       class="btn btn-danger btn-sm">
+                        Blacklist
+                    </a>
+
+                {% else %}
+
+                    <span class="text-danger">
+                        Blacklisted
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+<a href="/admin/dashboard" class="btn btn-secondary">
+    ← Back to Dashboard
+</a>
+
+{% endblock %}

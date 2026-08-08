@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>🏔️ Assign Trek</h1>
+
+<h3>Staff: {{ staff[1] }}</h3>
+
+<form method="POST">
+
+    <label>Select Trek:</label>
+
+    <select name="trek_id" required>
+
+        <option value="">-- Select Trek --</option>
+
+        {% for trek in treks %}
+            <option value="{{ trek[0] }}">
+                {{ trek[1] }} - {{ trek[2] }}
+            </option>
+        {% endfor %}
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">
+        Assign Trek
+    </button>
+
+</form>
+
+{% endblock %}
