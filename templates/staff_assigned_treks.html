@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Assigned Treks</title>
+</head>
+
+<body>
+
+<h1>🏔️ My Assigned Treks</h1>
+
+<p>Welcome {{ session["staff_name"] }}</p>
+
+{% if treks %}
+
+    {% for trek in treks %}
+
+        <div>
+
+            <h2>{{ trek[1] }}</h2>
+
+            <p>📍 <strong>Location:</strong> {{ trek[2] }}</p>
+
+            <p>⏱️ <strong>Duration:</strong> {{ trek[3] }}</p>
+
+            <p>🎯 <strong>Difficulty:</strong> {{ trek[4] }}</p>
+
+            <p>💰 <strong>Price:</strong> ₹{{ trek[5] }}</p>
+
+            <p>🎫 <strong>Available Slots:</strong> {{ trek[6] }}</p>
+
+            <p>📌 <strong>Status:</strong> {{ trek[7] }}</p>
+
+            <p>📅 <strong>Start Date:</strong> {{ trek[8] }}</p>
+
+            <p>📅 <strong>End Date:</strong> {{ trek[9] }}</p>
+
+            <a href="/staff/participants/{{ trek[0] }}">
+                👥 View Participants
+            </a>
+            <br><br>
+
+            <a href="/staff/update_status/{{ trek[0] }}">
+                📌 Update Status
+            </a>
+
+            <hr>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>No trek has been assigned to you yet.</p>
+
+{% endif %}
+
+<a href="/staff/dashboard">← Back to Staff Dashboard</a>
+
+</body>
+</html>

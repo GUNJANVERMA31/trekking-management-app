@@ -108,6 +108,31 @@
                             required
                         >
                     </div>
+                    <div class="mb-3">
+    <label class="form-label">Available Slots</label>
+    <input type="number" name="available_slots"
+           class="form-control"
+           value="{{ trek[6] }}"
+           min="1"
+           required>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Start Date</label>
+    <input type="date" name="start_date"
+           class="form-control"
+           value="{{ trek[8] or '' }}"
+           required>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">End Date</label>
+    <input type="date" name="end_date"
+           class="form-control"
+           value="{{ trek[9] or '' }}"
+           required>
+</div>
+
 
 
                     <div class="d-grid">

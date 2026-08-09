@@ -4,6 +4,22 @@
 
 <h1>👥 Users</h1>
 
+<form method="GET" action="/admin/users" class="mb-4">
+
+    <input
+        type="text"
+        name="search"
+        placeholder="Search by name or email"
+        value="{{ search }}"
+        class="form-control"
+    >
+
+    <button type="submit" class="btn btn-primary mt-2">
+        🔎 Search
+    </button>
+
+</form>
+
 <p>View and manage registered users.</p>
 
 <table class="table table-bordered table-striped">

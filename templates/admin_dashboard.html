@@ -7,6 +7,47 @@
     <p class="text-muted">
         Welcome Admin 👋 Manage your trekking application from here.
     </p>
+
+<div class="row g-4 mb-4">
+
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h6>Total Treks</h6>
+                <h2>{{ total_treks }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h6>Total Users</h6>
+                <h2>{{ total_users }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h6>Total Staff</h6>
+                <h2>{{ total_staff }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h6>Total Bookings</h6>
+                <h2>{{ total_bookings }}</h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 </div>
 
 <div class="row g-4 justify-content-center">
@@ -105,6 +146,79 @@
                    class="btn btn-danger">
                     Logout
                 </a>
+                <!-- Search Users -->
+<div class="col-md-6 col-lg-4">
+    <div class="card h-100 shadow-sm border-0 text-center">
+        <div class="card-body p-4">
+
+            <div class="display-5 mb-3">🔎</div>
+
+            <h5 class="card-title fw-bold">
+                Search Users
+            </h5>
+
+            <p class="card-text text-muted">
+                Search registered users.
+            </p>
+
+            <a href="/admin/users"
+               class="btn btn-info text-white">
+                Search Users
+            </a>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Search Staff -->
+<div class="col-md-6 col-lg-4">
+    <div class="card h-100 shadow-sm border-0 text-center">
+        <div class="card-body p-4">
+
+            <div class="display-5 mb-3">👨‍💼</div>
+
+            <h5 class="card-title fw-bold">
+                Search Staff
+            </h5>
+
+            <p class="card-text text-muted">
+                Search registered trek staff.
+            </p>
+
+            <a href="/admin/staff"
+               class="btn btn-warning">
+                Search Staff
+            </a>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- Search Treks -->
+<div class="col-md-6 col-lg-4">
+    <div class="card h-100 shadow-sm border-0 text-center">
+        <div class="card-body p-4">
+
+            <div class="display-5 mb-3">🏔️</div>
+
+            <h5 class="card-title fw-bold">
+                Search Treks
+            </h5>
+
+            <p class="card-text text-muted">
+                Search trekking packages.
+            </p>
+
+            <a href="/admin/treks"
+               class="btn btn-primary">
+                Search Treks
+            </a>
+
+        </div>
+    </div>
+</div>
 
             </div>
         </div>

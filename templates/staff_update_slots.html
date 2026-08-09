@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Trek Slots</title>
+</head>
+
+<body>
+
+<h1>🎫 Update Available Slots</h1>
+
+<h2>🏔️ {{ trek[0] }}</h2>
+
+<p>
+    Current Available Slots:
+    <strong>{{ trek[1] }}</strong>
+</p>
+
+<form method="POST">
+
+    <label>New Available Slots:</label>
+
+    <input
+        type="number"
+        name="available_slots"
+        min="0"
+        value="{{ trek[1] }}"
+        required
+    >
+
+    <button type="submit">
+        Update Slots
+    </button>
+
+</form>
+
+<br>
+
+<a href="/staff/assigned_treks">
+    ← Back to Assigned Treks
+</a>
+
+</body>
+</html>

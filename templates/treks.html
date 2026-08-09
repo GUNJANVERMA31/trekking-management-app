@@ -4,6 +4,23 @@
 
 <div class="text-center mb-4">
     <h1 class="fw-bold">🏔️ Available Trekking Packages</h1>
+
+    <form method="GET" action="/treks">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search trek, location or difficulty"
+            value="{{ search }}"
+        >
+
+        <button type="submit">
+            🔎 Search
+        </button>
+
+    </form>
+
+    <br>
     <p class="text-muted">
         Choose a trekking package and start your adventure.
     </p>
@@ -35,6 +52,22 @@
                 <p>
                     <strong>Difficulty:</strong>
                     {{ trek[4] }}
+                </p>
+
+                <p>
+                    <strong>Available Slots:</strong> {{ trek[6] }}
+                </p>
+
+                <p>
+                    <strong>Start Date:</strong> {{ trek[8] }}
+                </p>
+
+                <p>
+                    <strong>End Date:</strong> {{ trek[9] }}
+                </p>
+
+                <p>
+                    <strong>Status:</strong> {{ trek[7] }}
                 </p>
 
                 <h5 class="fw-bold">
