@@ -2,152 +2,162 @@
 
 {% block content %}
 
-<div class="row justify-content-center">
+<div class="col-md-8 col-lg-6">
 
-    <div class="col-md-8 col-lg-6">
+```
+<div class="card shadow-sm border-0 mt-4">
 
-        <div class="card shadow-sm border-0 mt-4">
+    <div class="card-body p-4">
 
-            <div class="card-body p-4">
+        <h2 class="text-center fw-bold mb-4">
+            ➕ Add New Trek
+        </h2>
 
-                <h2 class="text-center fw-bold mb-4">
-                    ➕ Add New Trek
-                </h2>
+        <form method="POST">
 
-                <form method="POST">
+            <div class="mb-3">
+                <label for="trek_name" class="form-label">
+                    Trek Name
+                </label>
 
-                    <div class="mb-3">
-                        <label for="trek_name" class="form-label">
-                            Trek Name
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="trek_name"
-                            name="trek_name"
-                            placeholder="Enter trek name"
-                            required
-                        >
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="location" class="form-label">
-                            Location
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="location"
-                            name="location"
-                            placeholder="Enter location"
-                            required
-                        >
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="duration" class="form-label">
-                            Duration
-                        </label>
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="duration"
-                            name="duration"
-                            placeholder="Example: 5 Days"
-                            required
-                        >
-                    </div>
-
-
-                    <div class="mb-3">
-                        <label for="difficulty" class="form-label">
-                            Difficulty
-                        </label>
-
-                        <select
-                            class="form-select"
-                            id="difficulty"
-                            name="difficulty"
-                            required
-                        >
-                            <option value="" selected disabled>
-                                Select difficulty
-                            </option>
-                            <option value="Easy">Easy</option>
-                            <option value="Moderate">Moderate</option>
-                            <option value="Hard">Hard</option>
-                        </select>
-                    </div>
-
-
-                    <div class="mb-4">
-                        <label for="price" class="form-label">
-                            Price (₹)
-                        </label>
-
-                        <input
-                            type="number"
-                            class="form-control"
-                            id="price"
-                            name="price"
-                            placeholder="Enter price"
-                            min="0"
-                            required
-                        >
-                    </div>
-
-                    <!-- Price -->
-<div class="mb-3">
-    <label class="form-label">Price</label>
-    <input type="number" name="price" class="form-control" required>
-</div>
-
-<!-- 👇 YAHAN SE NEW CODE ADD KARO -->
-
-<div class="mb-3">
-    <label class="form-label">Available Slots</label>
-    <input type="number" name="available_slots" class="form-control" min="1" required>
-</div>
-
-<div class="mb-3">
-    <label class="form-label">Start Date</label>
-    <input type="date" name="start_date" class="form-control" required>
-</div>
-
-<div class="mb-3">
-    <label class="form-label">End Date</label>
-    <input type="date" name="end_date" class="form-control" required>
-</div>
-
-<!-- 👆 YAHAN TAK NEW CODE -->
-
-<!-- फिर तुम्हारा existing Add Trek button -->
-
-
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-success">
-                            ➕ Add Trek
-                        </button>
-                    </div>
-
-                </form>
-
-                <div class="text-center mt-3">
-                    <a href="/admin/treks" class="text-decoration-none">
-                        ← Back to Manage Treks
-                    </a>
-                </div>
-
+                <input
+                    type="text"
+                    class="form-control"
+                    id="trek_name"
+                    name="trek_name"
+                    placeholder="Enter trek name"
+                    required
+                >
             </div>
 
+            <div class="mb-3">
+                <label for="location" class="form-label">
+                    Location
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    id="location"
+                    name="location"
+                    placeholder="Enter location"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="duration" class="form-label">
+                    Duration
+                </label>
+
+                <input
+                    type="text"
+                    class="form-control"
+                    id="duration"
+                    name="duration"
+                    placeholder="Example: 5 Days"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="difficulty" class="form-label">
+                    Difficulty
+                </label>
+
+                <select
+                    class="form-select"
+                    id="difficulty"
+                    name="difficulty"
+                    required
+                >
+                    <option value="" selected disabled>
+                        Select difficulty
+                    </option>
+                    <option value="Easy">Easy</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="price" class="form-label">
+                    Price (₹)
+                </label>
+
+                <input
+                    type="number"
+                    class="form-control"
+                    id="price"
+                    name="price"
+                    placeholder="Enter price"
+                    min="0"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="available_slots" class="form-label">
+                    Available Slots
+                </label>
+
+                <input
+                    type="number"
+                    class="form-control"
+                    id="available_slots"
+                    name="available_slots"
+                    placeholder="Enter available slots"
+                    min="1"
+                    required
+                >
+            </div>
+
+            <div class="mb-3">
+                <label for="start_date" class="form-label">
+                    Start Date
+                </label>
+
+                <input
+                    type="date"
+                    class="form-control"
+                    id="start_date"
+                    name="start_date"
+                    required
+                >
+            </div>
+
+            <div class="mb-4">
+                <label for="end_date" class="form-label">
+                    End Date
+                </label>
+
+                <input
+                    type="date"
+                    class="form-control"
+                    id="end_date"
+                    name="end_date"
+                    required
+                >
+            </div>
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-success">
+                    ➕ Add Trek
+                </button>
+            </div>
+
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="/admin/treks" class="text-decoration-none">
+                ← Back to Manage Treks
+            </a>
         </div>
 
     </div>
+
+</div>
+```
 
 </div>
 

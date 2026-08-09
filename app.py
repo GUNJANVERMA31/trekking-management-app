@@ -269,6 +269,17 @@ def login():
 
     return render_template("login.html")
 
+@app.route("/dashboard")
+def dashboard():
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    return render_template(
+        "dashboard.html",
+        name=session["user_name"]
+    )
+
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
 
@@ -671,6 +682,20 @@ def assign_trek(staff_id):
 
         trek_id = request.form["trek_id"]
 
+        # Check if this trek is already assigned to this staff
+        cursor.execute("""
+            SELECT id
+            FROM trek_staff
+            WHERE staff_id = ? AND trek_id = ?
+        """, (staff_id, trek_id))
+
+        existing_assignment = cursor.fetchone()
+
+        if existing_assignment:
+            conn.close()
+            flash("This trek is already assigned to this staff member.")
+            return redirect("/admin/staff")
+
         cursor.execute("""
             INSERT INTO trek_staff (staff_id, trek_id)
             VALUES (?, ?)
@@ -686,10 +711,11 @@ def assign_trek(staff_id):
     cursor.execute("SELECT * FROM treks")
     treks = cursor.fetchall()
 
-    cursor.execute(
-        "SELECT id, fullname, email FROM staff WHERE id = ?",
-        (staff_id,)
-    )
+    cursor.execute("""
+        SELECT id, fullname, email
+        FROM staff
+        WHERE id = ?
+    """, (staff_id,))
 
     staff_member = cursor.fetchone()
 
